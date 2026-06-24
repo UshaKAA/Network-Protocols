@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Operations Log — Saad Food Industries</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F1EB;
+      /* warm paper */
+      --surface: #FFFFFF;
+      --ink: #1C1917;
+      --ink-soft: #44403C;
+      --muted: #78716C;
+      --line: #E7E2DA;
+      /* warm hairline */
+      --line-strong: #D6D0C4;
+      --tile: #FBF8F3;
+      /* cream tile */
+      --accent: #B91C1C;
+      /* tomato red */
+      --accent-soft: #FEE2E2;
+      --accent-tint: #FEF2F2;
+      --ok: #15803D;
+      --info: #1D4ED8;
+      --info-tint: #EFF6FF;
+      --warn: #C2410C;
+      --danger: #B91C1C;
+      --danger-bg: #FEF2F2;
+      --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --serif: 'Fraunces', Georgia, serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background: var(--bg);
+    }
+
+    body {
+      font-family: 'Geist Mono', 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      font-size: 13.5px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 96px;
+    }
+
+    /* ──────────────────────────────────────────
+   LETTERHEAD
+────────────────────────────────────────── */
+    .doc-header {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    }
+
+    .dh-brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 26px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dh-brand-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dh-logo {
+      width: 46px;
+      height: 46px;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      border-radius: 4px;
+    }
+
+    .dh-company {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .dh-tagline {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    .dh-title-wrap {
+      text-align: right;
+    }
+
+    .dh-title {
+      font-family: 'Geist Mono';
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+
+    .dh-docno {
+      font-family: 'Geist Mono';
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* identity strip */
+    .dh-identity {
+      display: grid;
+      grid-template-columns: 0.9fr 1fr 1.4fr 1.4fr 1fr;
+      background: var(--tile);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dh-field {
+      padding: 12px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .dh-field:last-child {
+      border-right: none;
+    }
+
+    .dh-field-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .dh-field-value,
+    .dh-field input.dh-input,
+    .dh-field select.dh-input {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      font-family: 'Geist Mono', sans-serif;
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      padding: 0;
+    }
+
+    .dh-field input.dh-input.mono {
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .dh-field input.dh-input:focus,
+    .dh-field select.dh-input:focus {
+      background: #fff;
+      outline: 1px solid var(--accent);
+      border-radius: 2px;
+    }
+
+    /* KPI tiles */
+    .dh-kpis {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: var(--surface);
+    }
+
+    .dh-kpi {
+      padding: 16px 18px;
+      border-right: 1px solid var(--line);
+    }
+
+    .dh-kpi:last-child {
+      border-right: none;
+    }
+
+    .dh-kpi.primary {
+      background: var(--accent-tint);
+    }
+
+    .dh-kpi-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .dh-kpi-value {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .dh-kpi.primary .dh-kpi-value {
+      color: var(--accent);
+    }
+
+    .dh-kpi-value.small {
+      font-family: 'Geist Mono';
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--ink-soft);
+      word-break: break-word;
+      letter-spacing: 0;
+    }
+
+    .dh-kpi-value.delivered {
+      color: var(--ok);
+    }
+
+    /* ──────────────────────────────────────────
+   TABLE
+────────────────────────────────────────── */
+    .log-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    }
+
+    .log-table .sec-hdr td {
+      background: var(--tile);
+      color: var(--ink);
+      font-family: 'Geist Mono';
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.005em;
+      text-transform: none;
+      padding: 12px 16px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+    }
+
+    .log-table tr:first-child .sec-hdr td,
+    .log-table .sec-hdr:first-child td {
+      border-top: none;
+    }
+
+    .log-table .col-hdr th {
+      background: var(--surface);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    .log-table .col-hdr th:last-child {
+      border-right: none;
+    }
+
+    .log-table td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 6px 8px;
+      vertical-align: middle;
+    }
+
+    .log-table td:last-child {
+      border-right: none;
+    }
+
+    .log-table tbody tr:hover td {
+      background: #FAF7F2;
+    }
+
+    .log-table tr:hover .sec-hdr td,
+    .log-table tr:hover .col-hdr th {
+      background: inherit;
+    }
+
+    /* row index */
+    .ri {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      width: 30px;
+      min-width: 30px;
+    }
+
+    /* subtotal */
+    .subtotal td {
+      background: var(--tile);
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .subtotal .computed {
+      background: var(--ink) !important;
+      color: #fff !important;
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+
+    /* breakdown */
+    .bd-row td {
+      background: var(--danger-bg);
+    }
+
+    /* add row */
+    .add-row td {
+      background: var(--surface);
+      border-top: 1px dashed var(--line);
+      padding: 8px 12px;
+    }
+
+    /* inline inputs */
+    .log-table input[type="text"],
+    .log-table input[type="number"],
+    .log-table textarea,
+    .log-table select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 4px 6px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      border-radius: 2px;
+    }
+
+    .log-table input[type="text"]:focus,
+    .log-table input[type="number"]:focus,
+    .log-table textarea:focus,
+    .log-table select:focus {
+      background: #fff;
+      outline: 1px solid var(--accent);
+    }
+
+    .log-table input[type="number"] {
+      font-family: var(--mono);
+      text-align: right;
+    }
+
+    .log-table textarea {
+      resize: none;
+      min-height: 28px;
+      font-family: inherit;
+    }
+
+    .log-table select {
+      cursor: pointer;
+    }
+
+    /* computed cells */
+    .computed {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--info);
+      background: var(--info-tint) !important;
+      text-align: right;
+      padding: 6px 10px;
+    }
+
+    .computed-danger {
+      color: var(--danger);
+      background: var(--danger-bg) !important;
+    }
+
+    /* joints warning */
+    .joints-warn {
+      display: none;
+      font-size: 10px;
+      color: var(--danger);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .joints-warn.show {
+      display: block;
+    }
+
+    tr.joints-alert>td {
+      background: var(--danger-bg) !important;
+    }
+
+    tr.joints-alert>td:first-child {
+      box-shadow: inset 3px 0 0 var(--danger);
+    }
+
+    /* pinned notes */
+    .pin-row>td {
+      background: #FFFBEB !important;
+    }
+
+    .pin-row>td:first-child {
+      box-shadow: inset 3px 0 0 #D97706;
+    }
+
+    .pin-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      background: #D97706;
+      color: #fff;
+      padding: 1px 5px;
+      letter-spacing: 0.05em;
+      margin-right: 4px;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+
+    /* battery bar */
+    .batt-bar-wrap {
+      height: 20px;
+      background: var(--line);
+      position: relative;
+      min-width: 80px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .batt-bar-fill {
+      height: 100%;
+      background: #10B981;
+      transition: width 0.3s;
+      min-width: 2px;
+    }
+
+    .batt-bar-fill.mid {
+      background: #F59E0B;
+    }
+
+    .batt-bar-fill.low {
+      background: #EF4444;
+    }
+
+    .batt-bar-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      font-family: var(--mono);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* add/remove buttons */
+    .btn-add {
+      background: none;
+      border: none;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      padding: 2px 4px;
+    }
+
+    .btn-add:hover {
+      text-decoration: underline;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: var(--line-strong);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 0 2px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .btn-remove:hover {
+      color: var(--danger);
+    }
+
+    /* drum-2 toggle */
+    .btn-drum2 {
+      background: var(--accent-tint);
+      border: 1px dashed var(--accent);
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 4px 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      border-radius: 3px;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .btn-drum2:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-drum2.remove {
+      background: var(--accent-soft);
+    }
+
+    .btn-drum2.remove:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    tr.drum2-off .drum2-input {
+      display: none;
+    }
+
+    tr.drum2-on .btn-drum2.add {
+      display: none;
+    }
+
+    tr.drum2-off .btn-drum2.remove {
+      display: none;
+    }
+
+    /* action bar */
+    .action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--ink);
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 50;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-act {
+      padding: 8px 18px;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      border-radius: 4px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #991B1B;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #44403C;
+      color: #D6D0C4;
+    }
+
+    .btn-secondary:hover {
+      border-color: #A8A29E;
+      color: #fff;
+    }
+
+    .save-status {
+      font-size: 11px;
+      color: #A8A29E;
+      font-family: var(--mono);
+      margin-left: auto;
+    }
+
+    #csvImportInput {
+      display: none;
+    }
+
+    .print-foot {
+      display: none;
+    }
+
+    /* ──────────────────────────────────────────
+   PRINT — 1:1 with browser
+────────────────────────────────────────── */
+    @media print {
+
+      html,
+      body,
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+
+      @page {
+        size: A4 landscape;
+        margin: 10mm 10mm 12mm 10mm;
+      }
+
+      body {
+        background: #fff;
+        font-size: 11.5px;
+      }
+
+      .page {
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .action-bar,
+      .btn-add,
+      .btn-remove,
+      .btn-drum2,
+      .add-row,
+      #csvImportInput {
+        display: none !important;
+      }
+
+      .doc-header {
+        box-shadow: none;
+        margin-bottom: 8px;
+        border-radius: 0;
+      }
+
+      .log-table {
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .log-table input,
+      .log-table textarea,
+      .log-table select,
+      .dh-input {
+        border: none !important;
+        background: transparent !important;
+        outline: none !important;
+        color: var(--ink) !important;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      select {
+        padding-right: 0 !important;
+      }
+
+      .log-table {
+        page-break-inside: auto;
+      }
+
+      .log-table tr,
+      .log-table .sec-hdr,
+      .log-table .col-hdr,
+      .log-table .subtotal {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      .sec-hdr,
+      .col-hdr {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      .doc-header {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      .computed {
+        color: var(--info) !important;
+        background: var(--info-tint) !important;
+      }
+
+      .computed-danger {
+        color: var(--danger) !important;
+        background: var(--danger-bg) !important;
+      }
+
+      .subtotal .computed {
+        background: var(--ink) !important;
+        color: #fff !important;
+      }
+
+      .batt-bar-wrap {
+        background: var(--line) !important;
+      }
+
+      .batt-bar-fill {
+        background: #10B981 !important;
+      }
+
+      .batt-bar-fill.mid {
+        background: #F59E0B !important;
+      }
+
+      .batt-bar-fill.low {
+        background: #EF4444 !important;
+      }
+
+      .print-foot {
+        display: block;
+        text-align: center;
+        font-size: 9px;
+        color: var(--muted);
+        margin-top: 8px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- LETTERHEAD -->
+    <header class="doc-header">
+      <div class="dh-brand">
+        <div class="dh-brand-left">
+          <div class="dh-logo">SFI</div>
+          <div>
+            <div class="dh-company">Saad Food Industries</div>
+            <div class="dh-tagline">Tomato Paste · Production · Quality · Dispatch</div>
+          </div>
+        </div>
+        <div class="dh-title-wrap">
+          <div class="dh-title">Daily Operations Log</div>
+          <div class="dh-docno" id="docNo">Confidential · Internal Use</div>
+        </div>
+      </div>
+
+      <!-- Identity -->
+      <div class="dh-identity">
+        <div class="dh-field">
+          <div class="dh-field-label">Date</div>
+          <input type="date" id="logDate" class="dh-input mono">
+        </div>
+        <div class="dh-field">
+          <div class="dh-field-label">Production Line</div>
+          <select id="prodLine" class="dh-input">
+            <option value="Line A">Line A</option>
+            <option value="Line B">Line B</option>
+            <option value="Line A + B">Line A + B</option>
+          </select>
+        </div>
+        <div class="dh-field">
+          <div class="dh-field-label">Stock — Saad</div>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="stock1Name" class="dh-input" placeholder="Brand name" style="flex:1;">
+            <input type="number" id="stock1Qty" class="dh-input mono" placeholder="0" min="0"
+              style="max-width:72px; text-align:right;">
+          </div>
+        </div>
+        <div class="dh-field">
+          <div class="dh-field-label">Stock — Chilly Willy</div>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="stock2Name" class="dh-input" placeholder="Brand name" style="flex:1;">
+            <input type="number" id="stock2Qty" class="dh-input mono" placeholder="0" min="0"
+              style="max-width:72px; text-align:right;">
+          </div>
+        </div>
+        <div class="dh-field">
+          <div class="dh-field-label">Document No.</div>
+          <input type="text" id="docNoInput" class="dh-input mono" placeholder="Auto-generated">
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="dh-kpis">
+        <div class="dh-kpi primary">
+          <div class="dh-kpi-label">Total Cartons</div>
+          <div class="dh-kpi-value" id="meta-total-cartons">0</div>
+        </div>
+        <div class="dh-kpi">
+          <div class="dh-kpi-label">Brands Produced</div>
+          <div class="dh-kpi-value small" id="meta-brands">—</div>
+        </div>
+        <div class="dh-kpi">
+          <div class="dh-kpi-label">Batch IDs</div>
+          <div class="dh-kpi-value small" id="meta-batchids">—</div>
+        </div>
+        <div class="dh-kpi">
+          <div class="dh-kpi-label">Delivered</div>
+          <div class="dh-kpi-value delivered" id="meta-total-delivery">0</div>
+        </div>
+        <div class="dh-kpi">
+          <div class="dh-kpi-label">Delivery Brands</div>
+          <div class="dh-kpi-value small" id="meta-delivery-brands">—</div>
+        </div>
+      </div>
+    </header>
+
+    <table class="log-table">
+      <colgroup>
+        <col style="width:30px">
+      </colgroup>
+
+      <!-- SECTION 1 · PROCESS PARAMETERS -->
+      <tr class="sec-hdr">
+        <td colspan="99">1 · Process Parameters</td>
+      </tr>
+      <tr class="col-hdr">
+        <th colspan="6">Avg. Incoming Brix (°Bx)</th>
+        <th colspan="6">Target Concentration (°Bx)</th>
+      </tr>
+      <tr>
+        <td colspan="6"><input type="number" id="incomingBrix" step="0.1" min="0" placeholder="e.g. 4.8"></td>
+        <td colspan="6"><input type="number" id="targetBrix" step="0.1" min="0" placeholder="e.g. 30.0"></td>
+      </tr>
+
+      <!-- SECTION 2 · DRUMS / BATCHES -->
+      <tr class="sec-hdr">
+        <td colspan="99">2 · Drums &amp; Batches</td>
+      </tr>
+      <tr class="col-hdr">
+        <th></th>
+        <th>Batch Label</th>
+        <th>Batch ID</th>
+        <th>Drum 1 No.</th>
+        <th>Drum 1 Brix</th>
+        <th>Drum 2 No.</th>
+        <th>Drum 2 Brix</th>
+        <th>Carton Count</th>
+        <th>Brand</th>
+        <th>Note</th>
+        <th></th>
+      </tr>
+      <tbody id="rows-batches"></tbody>
+      <tr class="subtotal" id="subtotal-batches">
+        <td colspan="7"
+          style="text-align:right; padding-right:10px; font-size:11px; color:var(--muted); font-weight:600; letter-spacing:0.04em; text-transform:uppercase;">
+          Total Cartons</td>
+        <td class="computed" id="total-cartons">0</td>
+        <td colspan="3"></td>
+      </tr>
+      <tr class="add-row">
+        <td colspan="99"><button class="btn-add" onclick="addBatchRow()">+ Add Batch</button></td>
+      </tr>
+
+      <!-- SECTION 3 · ROLLERS -->
+      <tr class="sec-hdr">
+        <td colspan="99">3 · Rollers</td>
+      </tr>
+      <tr class="col-hdr">
+        <th></th>
+        <th>Roll No.</th>
+        <th>Lot No.</th>
+        <th>Joints Used</th>
+        <th colspan="6">Remark (required if ≥3 joints)</th>
+        <th></th>
+      </tr>
+      <tbody id="rows-rollers"></tbody>
+      <tr class="add-row">
+        <td colspan="99"><button class="btn-add" onclick="addRollerRow()">+ Add Roller</button></td>
+      </tr>
+
+      <!-- SECTION 4 · DELIVERY -->
+      <tr class="sec-hdr">
+        <td colspan="99">4 · Delivery Summary</td>
+      </tr>
+      <tr class="col-hdr">
+        <th></th>
+        <th colspan="4">Brand Name</th>
+        <th colspan="2">Carton Count</th>
+        <th colspan="3">Destination / Client</th>
+        <th></th>
+      </tr>
+      <tbody id="rows-delivery"></tbody>
+      <tr class="subtotal" id="subtotal-delivery">
+        <td colspan="5"
+          style="text-align:right; padding-right:10px; font-size:11px; color:var(--muted); font-weight:600; letter-spacing:0.04em; text-transform:uppercase;">
+          Total Delivered</td>
+        <td colspan="2" class="computed" id="total-delivery">0</td>
+        <td colspan="4"></td>
+      </tr>
+      <tr class="add-row">
+        <td colspan="99"><button class="btn-add" onclick="addDeliveryRow()">+ Add Delivery Line</button></td>
+      </tr>
+
+      <!-- SECTION 5 · REMARKS -->
+      <tr class="sec-hdr">
+        <td colspan="99">5 · Work Remarks</td>
+      </tr>
+      <tr class="col-hdr">
+        <th></th>
+        <th colspan="2">Category</th>
+        <th colspan="7">Remark / Details</th>
+        <th></th>
+      </tr>
+      <tbody id="rows-remarks"></tbody>
+      <tr class="add-row">
+        <td colspan="99"><button class="btn-add" onclick="addRemarkRow()">+ Add Remark</button></td>
+      </tr>
+
+      <!-- SECTION 5b · PINNED -->
+      <tr class="sec-hdr">
+        <td colspan="99">Pinned Notes</td>
+      </tr>
+      <tr class="col-hdr">
+        <th></th>
+        <th colspan="2">Category</th>
+        <th colspan="7">Note</th>
+        <th></th>
+      </tr>
+      <tbody id="rows-pinned"></tbody>
+      <tr class="add-row">
+        <td colspan="99"><button class="btn-add" onclick="addPinnedRow()">+ Add Pinned Note</button></td>
+      </tr>
+
+      <!-- SECTION 6 · BREAKDOWNS -->
+      <tr class="sec-hdr">
+        <td colspan="99">6 · Breakdowns &amp; Issues</td>
+      </tr>
+      <tr class="col-hdr">
+        <th></th>
+        <th colspan="2">Item / Equipment</th>
+        <th colspan="3">What Broke</th>
+        <th colspan="3">Reason / Cause</th>
+        <th colspan="2">Status</th>
+      </tr>
+      <tbody id="rows-breakdown"></tbody>
+      <tr class="add-row">
+        <td colspan="99"><button class="btn-add" onclick="addBreakdownRow()">+ Add Issue</button></td>
+      </tr>
+
+      <!-- SECTION 7 · BOILER -->
+      <tr class="sec-hdr">
+        <td colspan="99">7 · Boiler — Diesel Consumption</td>
+      </tr>
+      <tr class="col-hdr">
+        <th colspan="3">Opening Level (L)</th>
+        <th colspan="3">Closing Level (L)</th>
+        <th colspan="3">Consumed (L) — Auto</th>
+        <th colspan="3">Remarks</th>
+      </tr>
+      <tr>
+        <td colspan="3"><input type="number" id="boilerOpen" placeholder="0" min="0" oninput="calcBoiler()"></td>
+        <td colspan="3"><input type="number" id="boilerClose" placeholder="0" min="0" oninput="calcBoiler()"></td>
+        <td colspan="3" class="computed" id="boilerConsumed">—</td>
+        <td colspan="3"><input type="text" id="boilerRemarks" placeholder="Any observations…"></td>
+      </tr>
+
+      <!-- SECTION 8 · BATTERY -->
+      <tr class="sec-hdr">
+        <td colspan="99">8 · Reserve Battery — Generator Diesel</td>
+      </tr>
+      <tr class="col-hdr">
+        <th colspan="3">Diesel Added (L)</th>
+        <th colspan="2">Yesterday Level (%)</th>
+        <th colspan="2">Current Level (%)</th>
+        <th colspan="2">Daily Use (%) — Auto</th>
+        <th colspan="3">Remarks</th>
+      </tr>
+      <tr>
+        <td colspan="3"><input type="number" id="battAdded" placeholder="0" min="0" oninput="calcBattery()"></td>
+        <td colspan="2"><input type="number" id="battPrev" placeholder="0" min="0" max="100" oninput="calcBattery()">
+        </td>
+        <td colspan="2"><input type="number" id="battCurrent" placeholder="0" min="0" max="100" oninput="calcBattery()">
+        </td>
+        <td colspan="2" class="computed computed-danger" id="battConsumed">—</td>
+        <td colspan="3"><input type="text" id="battRemarks" placeholder="Usage notes, top-ups…"></td>
+      </tr>
+      <tr>
+        <td colspan="3"
+          style="font-size:10px; color:var(--muted); padding:6px 10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">
+          Battery Level</td>
+        <td colspan="9">
+          <div class="batt-bar-wrap">
+            <div class="batt-bar-fill" id="battFill" style="width:0%"></div>
+            <div class="batt-bar-label" id="battLabel">0%</div>
+          </div>
+        </td>
+      </tr>
+
+    </table>
+
+    <div class="print-foot">Saad Food Industries · Confidential · Daily Operations Log</div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-act btn-primary" onclick="window.print()"
+      title="Tip: enable &quot;Background graphics&quot; in the print dialog">Save as PDF</button>
+    <button class="btn-act btn-secondary" onclick="exportCSV()">Export CSV</button>
+    <button class="btn-act btn-secondary" onclick="document.getElementById('csvImportInput').click()">Import
+      CSV</button>
+    <input type="file" id="csvImportInput" accept=".csv" onchange="importCSV(event)">
+    <button class="btn-act btn-primary" onclick="saveAll()">Save Log</button>
+    <span class="save-status" id="saveStatus">No changes saved</span>
+  </div>
+
+  <script>
+    const REMARK_CATEGORIES = [
+      'Delivery', 'Requested — Products', 'Requested — Equipment',
+      'Maintenance', 'Quality', 'HR / Staff', 'Safety', 'Other'
+    ];
+
+    window.onload = () => {
+      const today = new Date().toISOString().slice(0, 10);
+      document.getElementById('logDate').value = today;
+      updateDocNo();
+      loadFromStorage();
+    };
+
+    document.getElementById('logDate').addEventListener('change', () => {
+      updateDocNo();
+      loadFromStorage();
+    });
+
+    function updateDocNo() {
+      const d = (document.getElementById('logDate').value || '').replace(/-/g, '');
+      const docInput = document.getElementById('docNoInput');
+      if (docInput && !docInput.dataset.userEdited) {
+        docInput.value = d ? `SFI-OPS-${d}` : '';
+      }
+    }
+    document.getElementById('docNoInput').addEventListener('input', (e) => {
+      e.target.dataset.userEdited = '1';
+    });
+
+    function ri(n) { return `<td class="ri">${n}</td>`; }
+    function removeRow(btn) { btn.closest('tr').remove(); recalcTotals(); }
+
+    // ── SECTION 2: BATCHES (max 2 drums, drum 2 optional) ──
+    let batchN = 0;
+    function addBatchRow(d = {}) {
+      batchN++;
+      const n = batchN;
+      const tbody = document.getElementById('rows-batches');
+      const tr = document.createElement('tr');
+      const drum2Active = !!(d.drum2 || d.drum2Brix);
+      tr.className = drum2Active ? 'drum2-on' : 'drum2-off';
+      tr.innerHTML = `
+    ${ri(n)}
+    <td><input type="text" placeholder="Batch 01" value="${d.label || ''}"></td>
+    <td><input type="text" placeholder="BAT-452534" value="${d.batchId || ''}"></td>
+    <td><input type="text" placeholder="Drum No." value="${d.drum1 || ''}"></td>
+    <td><input type="number" step="0.1" placeholder="°Bx" value="${d.drum1Brix || ''}" style="text-align:right;"></td>
+    <td>
+      <input class="drum2-input" type="text" placeholder="Drum No." value="${d.drum2 || ''}">
+      <button class="btn-drum2 add" onclick="toggleDrum2(this, true)">+ Drum 2</button>
+    </td>
+    <td>
+      <input class="drum2-input" type="number" step="0.1" placeholder="°Bx" value="${d.drum2Brix || ''}" style="text-align:right;">
+      <button class="btn-drum2 remove" onclick="toggleDrum2(this, false)">× Remove Drum 2</button>
+    </td>
+    <td><input type="number" placeholder="0" min="0" value="${d.cartons || ''}" oninput="recalcTotals()" style="text-align:right;"></td>
+    <td><input type="text" placeholder="Brand name" value="${d.brand || ''}"></td>
+    <td><input type="text" placeholder="Note" value="${d.note || ''}"></td>
+    <td style="width:24px; text-align:center;"><button class="btn-remove" onclick="removeRow(this)">×</button></td>`;
+      tbody.appendChild(tr);
+      recalcTotals();
+    }
+
+    function toggleDrum2(btn, on) {
+      const tr = btn.closest('tr');
+      if (on) {
+        tr.classList.remove('drum2-off');
+        tr.classList.add('drum2-on');
+      } else {
+        tr.classList.remove('drum2-on');
+        tr.classList.add('drum2-off');
+        tr.querySelectorAll('.drum2-input').forEach(i => i.value = '');
+      }
+    }
+
+    // ── SECTION 3: ROLLERS ──
+    let rollerN = 0;
+    function addRollerRow(d = {}) {
+      rollerN++;
+      const joints = d.joints || '';
+      const jVal = parseInt(joints) || 0;
+      const warnCls = jVal >= 3 ? 'show' : '';
+      const rowCls = jVal >= 3 ? 'joints-alert' : '';
+      const tbody = document.getElementById('rows-rollers');
+      const tr = document.createElement('tr');
+      if (rowCls) tr.className = rowCls;
+      tr.innerHTML = `
+    ${ri(rollerN)}
+    <td><input type="text" placeholder="R-001" value="${d.rollNum || ''}"></td>
+    <td><input type="text" placeholder="LOT-2025-06" value="${d.lotNum || ''}"></td>
+    <td style="width:96px;">
+      <input type="number" placeholder="0" min="0" value="${joints}" oninput="checkJoints(this)">
+      <div class="joints-warn ${warnCls}">Remark required (≥3)</div>
+    </td>
+    <td colspan="6"><input type="text" placeholder="${jVal >= 3 ? 'Required — explain' : 'Optional remark'}" value="${d.remark || ''}"></td>
+    <td style="width:24px; text-align:center;"><button class="btn-remove" onclick="removeRow(this)">×</button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    function checkJoints(input) {
+      const val = parseInt(input.value) || 0;
+      const warn = input.parentElement.querySelector('.joints-warn');
+      warn && warn.classList.toggle('show', val >= 3);
+      const tr = input.closest('tr');
+      if (tr) tr.classList.toggle('joints-alert', val >= 3);
+    }
+
+    // ── SECTION 4: DELIVERY ──
+    let deliveryN = 0;
+    function addDeliveryRow(d = {}) {
+      deliveryN++;
+      const tbody = document.getElementById('rows-delivery');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+    ${ri(deliveryN)}
+    <td colspan="4"><input type="text" placeholder="Brand name" value="${d.brand || ''}"></td>
+    <td colspan="2"><input type="number" placeholder="0" min="0" value="${d.count || ''}" oninput="recalcTotals()" style="text-align:right;"></td>
+    <td colspan="3"><input type="text" placeholder="Destination / Client" value="${d.dest || ''}"></td>
+    <td style="width:24px; text-align:center;"><button class="btn-remove" onclick="removeRow(this)">×</button></td>`;
+      tbody.appendChild(tr);
+      recalcTotals();
+    }
+
+    // ── SECTION 5: REMARKS ──
+    let remarkN = 0;
+    function addRemarkRow(d = {}) {
+      remarkN++;
+      const opts = REMARK_CATEGORIES.map(c =>
+        `<option value="${c}" ${d.cat === c ? 'selected' : ''}>${c}</option>`
+      ).join('');
+      const tbody = document.getElementById('rows-remarks');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+    ${ri(remarkN)}
+    <td colspan="2"><select>${opts}</select></td>
+    <td colspan="7"><textarea rows="1" placeholder="Enter details…">${d.text || ''}</textarea></td>
+    <td style="width:24px; text-align:center;"><button class="btn-remove" onclick="removeRow(this)">×</button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    // ── SECTION 6: BREAKDOWNS ──
+    let breakdownN = 0;
+    function addBreakdownRow(d = {}) {
+      breakdownN++;
+      const tbody = document.getElementById('rows-breakdown');
+      const tr = document.createElement('tr');
+      tr.className = 'bd-row';
+      tr.innerHTML = `
+    ${ri(breakdownN)}
+    <td colspan="2"><input type="text" placeholder="Item / Equipment" value="${d.item || ''}"></td>
+    <td colspan="3"><input type="text" placeholder="What broke" value="${d.what || ''}"></td>
+    <td colspan="3"><input type="text" placeholder="Root cause / reason" value="${d.reason || ''}"></td>
+    <td colspan="2">
+      <select>
+        <option value="Ongoing" ${d.status === 'Ongoing' ? 'selected' : ''}>Ongoing</option>
+        <option value="Fixed" ${d.status === 'Fixed' ? 'selected' : ''}>Fixed</option>
+        <option value="Pending" ${d.status === 'Pending' ? 'selected' : ''}>Pending</option>
+      </select>
+    </td>`;
+      tbody.appendChild(tr);
+    }
+
+    // ── TOTALS ──
+    function recalcTotals() {
+      let batchTotal = 0;
+      const brands = new Set(), batchIds = new Set();
+      document.querySelectorAll('#rows-batches tr').forEach(tr => {
+        const ins = tr.querySelectorAll('input');
+        // [0]label [1]batchId [2]drum1 [3]drum1Brix [4]drum2 [5]drum2Brix [6]cartons [7]brand [8]note
+        if (ins.length >= 9) {
+          batchTotal += parseFloat(ins[6].value) || 0;
+          if (ins[7].value.trim()) brands.add(ins[7].value.trim());
+          if (ins[1].value.trim()) batchIds.add(ins[1].value.trim());
+        }
+      });
+      document.getElementById('total-cartons').textContent = batchTotal || 0;
+      document.getElementById('meta-total-cartons').textContent = batchTotal || 0;
+      document.getElementById('meta-brands').textContent = brands.size ? [...brands].join(', ') : '—';
+      document.getElementById('meta-batchids').textContent = batchIds.size ? [...batchIds].join(', ') : '—';
+
+      let deliveryTotal = 0;
+      const deliveryBrands = new Set();
+      document.querySelectorAll('#rows-delivery tr').forEach(tr => {
+        const ins = tr.querySelectorAll('input');
+        if (ins.length >= 2) {
+          deliveryTotal += parseFloat(ins[1].value) || 0;
+          if (ins[0].value.trim()) deliveryBrands.add(ins[0].value.trim());
+        }
+      });
+      document.getElementById('total-delivery').textContent = deliveryTotal || 0;
+      document.getElementById('meta-total-delivery').textContent = deliveryTotal || 0;
+      document.getElementById('meta-delivery-brands').textContent =
+        deliveryBrands.size ? [...deliveryBrands].join(', ') : (deliveryTotal === 0 ? 'No delivery' : '—');
+    }
+
+    function calcBoiler() {
+      const o = parseFloat(document.getElementById('boilerOpen').value) || 0;
+      const c = parseFloat(document.getElementById('boilerClose').value) || 0;
+      const consumed = Math.max(0, o - c);
+      document.getElementById('boilerConsumed').textContent = consumed > 0 ? consumed.toFixed(1) + ' L' : '—';
+    }
+
+    function calcBattery() {
+      const prev = parseFloat(document.getElementById('battPrev').value) || 0;
+      const current = parseFloat(document.getElementById('battCurrent').value) || 0;
+      const pct = Math.min(100, Math.max(0, current));
+      const fill = document.getElementById('battFill');
+      const label = document.getElementById('battLabel');
+      fill.style.width = pct + '%';
+      label.textContent = pct + '%';
+      fill.className = 'batt-bar-fill' + (pct <= 20 ? ' low' : pct <= 40 ? ' mid' : '');
+      const consumed = prev > 0 ? Math.max(0, prev - current) : 0;
+      document.getElementById('battConsumed').textContent = prev > 0 ? consumed.toFixed(1) + '%' : '—';
+    }
+
+    // ── COLLECT ──
+    function collectData() {
+      const batches = [];
+      document.querySelectorAll('#rows-batches tr').forEach(tr => {
+        const ins = tr.querySelectorAll('input');
+        if (ins.length >= 9) {
+          const drum2On = tr.classList.contains('drum2-on');
+          batches.push({
+            label: ins[0].value, batchId: ins[1].value,
+            drum1: ins[2].value, drum1Brix: ins[3].value,
+            drum2: drum2On ? ins[4].value : '',
+            drum2Brix: drum2On ? ins[5].value : '',
+            cartons: ins[6].value,
+            brand: ins[7].value, note: ins[8].value
+          });
+        }
+      });
+
+      const rollers = [];
+      document.querySelectorAll('#rows-rollers tr').forEach(tr => {
+        const ins = tr.querySelectorAll('input');
+        if (ins.length >= 3)
+          rollers.push({
+            rollNum: ins[0].value, lotNum: ins[1].value, joints: ins[2].value,
+            remark: ins[3]?.value || ''
+          });
+      });
+
+      const delivery = [];
+      document.querySelectorAll('#rows-delivery tr').forEach(tr => {
+        const ins = tr.querySelectorAll('input');
+        if (ins.length >= 3)
+          delivery.push({ brand: ins[0].value, count: ins[1].value, dest: ins[2].value });
+      });
+
+      const remarks = [];
+      document.querySelectorAll('#rows-remarks tr').forEach(tr => {
+        const sel = tr.querySelector('select');
+        const ta = tr.querySelector('textarea');
+        if (sel && ta) remarks.push({ cat: sel.value, text: ta.value });
+      });
+
+      const breakdowns = [];
+      document.querySelectorAll('#rows-breakdown tr').forEach(tr => {
+        const ins = tr.querySelectorAll('input');
+        const sel = tr.querySelector('select');
+        if (ins.length >= 3)
+          breakdowns.push({
+            item: ins[0].value, what: ins[1].value, reason: ins[2].value,
+            status: sel ? sel.value : ''
+          });
+      });
+
+      return {
+        date: document.getElementById('logDate').value,
+        prodLine: document.getElementById('prodLine').value,
+        stock1Name: document.getElementById('stock1Name').value,
+        stock1Qty: document.getElementById('stock1Qty').value,
+        stock2Name: document.getElementById('stock2Name').value,
+        stock2Qty: document.getElementById('stock2Qty').value,
+        docNo: document.getElementById('docNoInput').value,
+        process: {
+          incomingBrix: document.getElementById('incomingBrix').value,
+          targetBrix: document.getElementById('targetBrix').value,
+        },
+        batches, rollers, delivery, remarks, breakdowns,
+        boiler: {
+          open: document.getElementById('boilerOpen').value,
+          close: document.getElementById('boilerClose').value,
+          remarks: document.getElementById('boilerRemarks').value,
+        },
+        battery: {
+          added: document.getElementById('battAdded').value,
+          prev: document.getElementById('battPrev').value,
+          current: document.getElementById('battCurrent').value,
+          remarks: document.getElementById('battRemarks').value,
+        }
+      };
+    }
+
+    function storageKey() {
+      return 'opslog_' + document.getElementById('logDate').value;
+    }
+
+    function saveAll() {
+      localStorage.setItem(storageKey(), JSON.stringify(collectData()));
+      document.getElementById('saveStatus').textContent = 'Saved at ' + new Date().toLocaleTimeString('en-GB');
+    }
+
+    function loadFromStorage() {
+      const raw = localStorage.getItem(storageKey());
+      resetForm();
+      if (!raw) { loadPinned(); return; }
+      const d = JSON.parse(raw);
+
+      if (d.prodLine) document.getElementById('prodLine').value = d.prodLine;
+      if (d.stock1Name) document.getElementById('stock1Name').value = d.stock1Name;
+      if (d.stock1Qty) document.getElementById('stock1Qty').value = d.stock1Qty;
+      if (d.stock2Name) document.getElementById('stock2Name').value = d.stock2Name;
+      if (d.stock2Qty) document.getElementById('stock2Qty').value = d.stock2Qty;
+      if (d.docNo) {
+        const docInput = document.getElementById('docNoInput');
+        docInput.value = d.docNo;
+        docInput.dataset.userEdited = '1';
+      }
+
+      if (d.process) {
+        document.getElementById('incomingBrix').value = d.process.incomingBrix || '';
+        document.getElementById('targetBrix').value = d.process.targetBrix || '';
+      }
+
+      batchN = 0; document.getElementById('rows-batches').innerHTML = '';
+      (d.batches || []).forEach(x => addBatchRow(x));
+      rollerN = 0; document.getElementById('rows-rollers').innerHTML = '';
+      (d.rollers || []).forEach(x => addRollerRow(x));
+      deliveryN = 0; document.getElementById('rows-delivery').innerHTML = '';
+      (d.delivery || []).forEach(x => addDeliveryRow(x));
+      remarkN = 0; document.getElementById('rows-remarks').innerHTML = '';
+      (d.remarks || []).forEach(x => addRemarkRow(x));
+      breakdownN = 0; document.getElementById('rows-breakdown').innerHTML = '';
+      (d.breakdowns || []).forEach(x => addBreakdownRow(x));
+
+      if (d.boiler) {
+        document.getElementById('boilerOpen').value = d.boiler.open || '';
+        document.getElementById('boilerClose').value = d.boiler.close || '';
+        document.getElementById('boilerRemarks').value = d.boiler.remarks || '';
+        calcBoiler();
+      }
+      if (d.battery) {
+        document.getElementById('battAdded').value = d.battery.added || '';
+        document.getElementById('battPrev').value = d.battery.prev || '';
+        document.getElementById('battCurrent').value = d.battery.current || '';
+        document.getElementById('battRemarks').value = d.battery.remarks || '';
+        calcBattery();
+      }
+
+      recalcTotals();
+      loadPinned();
+      document.getElementById('saveStatus').textContent = 'Loaded: ' + d.date;
+    }
+
+    function resetForm() {
+      ['rows-batches', 'rows-rollers', 'rows-delivery', 'rows-remarks', 'rows-breakdown', 'rows-pinned']
+        .forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ''; });
+      batchN = 0; rollerN = 0; deliveryN = 0; remarkN = 0; breakdownN = 0; pinnedN = 0;
+      ['boilerOpen', 'boilerClose', 'boilerRemarks', 'battAdded', 'battPrev', 'battCurrent', 'battRemarks',
+        'incomingBrix', 'targetBrix',
+        'stock1Name', 'stock1Qty', 'stock2Name', 'stock2Qty']
+        .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      document.getElementById('boilerConsumed').textContent = '—';
+      document.getElementById('battConsumed').textContent = '—';
+      document.getElementById('battFill').style.width = '0%';
+      document.getElementById('battLabel').textContent = '0%';
+      recalcTotals();
+    }
+
+    // ── CSV EXPORT ──
+    function exportCSV() {
+      const d = collectData();
+      const rows = [];
+      const q = v => `"${String(v || '').replace(/"/g, '""')}"`;
+
+      rows.push(['SECTION', 'DATE', 'PROD LINE', 'STOCK1 NAME', 'STOCK1 QTY', 'STOCK2 NAME', 'STOCK2 QTY', 'DOC NO'].map(q).join(','));
+      rows.push(['META', d.date, d.prodLine, d.stock1Name, d.stock1Qty, d.stock2Name, d.stock2Qty, d.docNo].map(q).join(','));
+      rows.push([]);
+
+      rows.push(['SECTION', 'INCOMING BRIX', 'TARGET BRIX'].map(q).join(','));
+      rows.push(['PROCESS', d.process.incomingBrix, d.process.targetBrix].map(q).join(','));
+      rows.push([]);
+
+      rows.push(['SECTION', 'BATCH LABEL', 'BATCH ID', 'DRUM 1', 'DRUM 1 BRIX', 'DRUM 2', 'DRUM 2 BRIX', 'CARTONS', 'BRAND', 'NOTE'].map(q).join(','));
+      d.batches.forEach(r => rows.push(
+        ['BATCH', r.label, r.batchId, r.drum1, r.drum1Brix, r.drum2, r.drum2Brix, r.cartons, r.brand, r.note].map(q).join(',')
+      ));
+      rows.push([]);
+
+      rows.push(['SECTION', 'ROLL NO', 'LOT NO', 'JOINTS', 'REMARK'].map(q).join(','));
+      d.rollers.forEach(r => rows.push(['ROLLER', r.rollNum, r.lotNum, r.joints, r.remark].map(q).join(',')));
+      rows.push([]);
+
+      rows.push(['SECTION', 'BRAND', 'CARTON COUNT', 'DESTINATION'].map(q).join(','));
+      d.delivery.forEach(r => rows.push(['DELIVERY', r.brand, r.count, r.dest].map(q).join(',')));
+      rows.push([]);
+
+      rows.push(['SECTION', 'CATEGORY', 'REMARK TEXT'].map(q).join(','));
+      d.remarks.forEach(r => rows.push(['REMARK', r.cat, r.text].map(q).join(',')));
+      rows.push([]);
+
+      rows.push(['SECTION', 'ITEM', 'WHAT BROKE', 'REASON', 'STATUS'].map(q).join(','));
+      d.breakdowns.forEach(r => rows.push(['BREAKDOWN', r.item, r.what, r.reason, r.status].map(q).join(',')));
+      rows.push([]);
+
+      rows.push(['SECTION', 'OPEN (L)', 'CLOSE (L)', 'REMARKS'].map(q).join(','));
+      rows.push(['BOILER', d.boiler.open, d.boiler.close, d.boiler.remarks].map(q).join(','));
+      rows.push([]);
+
+      rows.push(['SECTION', 'ADDED (L)', 'PREV (%)', 'CURRENT (%)', 'REMARKS'].map(q).join(','));
+      rows.push(['BATTERY', d.battery.added, d.battery.prev, d.battery.current, d.battery.remarks].map(q).join(','));
+
+      const blob = new Blob([rows.map(r => Array.isArray(r) ? r.join(',') : r).join('\n')], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `ops_log_${d.date}.csv`;
+      a.click();
+    }
+
+    // ── CSV IMPORT ──
+    function importCSV(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const lines = e.target.result.split('\n').map(l => l.trim()).filter(l => l);
+          const parsed = lines.map(line => {
+            const cells = [];
+            let cur = '', inQ = false;
+            for (let i = 0; i < line.length; i++) {
+              const ch = line[i];
+              if (ch === '"') { inQ = !inQ; continue; }
+              if (ch === ',' && !inQ) { cells.push(cur); cur = ''; continue; }
+              cur += ch;
+            }
+            cells.push(cur);
+            return cells;
+          });
+
+          const batches = [], rollers = [], delivery = [], remarks = [], breakdowns = [];
+          let boiler = {}, battery = {}, meta = {}, process = {};
+
+          parsed.forEach(cells => {
+            const sec = (cells[0] || '').toUpperCase().trim();
+            if (sec === 'META') { meta = { date: cells[1], prodLine: cells[2], stock1Name: cells[3], stock1Qty: cells[4], stock2Name: cells[5], stock2Qty: cells[6], docNo: cells[7] }; }
+            if (sec === 'PROCESS') { process = { incomingBrix: cells[1], targetBrix: cells[2] }; }
+            if (sec === 'BATCH') { batches.push({ label: cells[1], batchId: cells[2], drum1: cells[3], drum1Brix: cells[4], drum2: cells[5], drum2Brix: cells[6], cartons: cells[7], brand: cells[8], note: cells[9] }); }
+            if (sec === 'ROLLER') { rollers.push({ rollNum: cells[1], lotNum: cells[2], joints: cells[3], remark: cells[4] }); }
+            if (sec === 'DELIVERY') { delivery.push({ brand: cells[1], count: cells[2], dest: cells[3] }); }
+            if (sec === 'REMARK') { remarks.push({ cat: cells[1], text: cells[2] }); }
+            if (sec === 'BREAKDOWN') { breakdowns.push({ item: cells[1], what: cells[2], reason: cells[3], status: cells[4] }); }
+            if (sec === 'BOILER') { boiler = { open: cells[1], close: cells[2], remarks: cells[3] }; }
+            if (sec === 'BATTERY') { battery = { added: cells[1], prev: cells[2], current: cells[3], remarks: cells[4] }; }
+          });
+
+          resetForm();
+          if (meta.date) document.getElementById('logDate').value = meta.date;
+          if (meta.prodLine) document.getElementById('prodLine').value = meta.prodLine;
+          if (meta.stock1Name) document.getElementById('stock1Name').value = meta.stock1Name;
+          if (meta.stock1Qty) document.getElementById('stock1Qty').value = meta.stock1Qty;
+          if (meta.stock2Name) document.getElementById('stock2Name').value = meta.stock2Name;
+          if (meta.stock2Qty) document.getElementById('stock2Qty').value = meta.stock2Qty;
+          if (meta.docNo) {
+            const docInput = document.getElementById('docNoInput');
+            docInput.value = meta.docNo;
+            docInput.dataset.userEdited = '1';
+          }
+
+          if (process.incomingBrix !== undefined) {
+            document.getElementById('incomingBrix').value = process.incomingBrix || '';
+            document.getElementById('targetBrix').value = process.targetBrix || '';
+          }
+
+          batches.forEach(x => addBatchRow(x));
+          rollers.forEach(x => addRollerRow(x));
+          delivery.forEach(x => addDeliveryRow(x));
+          remarks.forEach(x => addRemarkRow(x));
+          breakdowns.forEach(x => addBreakdownRow(x));
+
+          if (boiler.open !== undefined) {
+            document.getElementById('boilerOpen').value = boiler.open;
+            document.getElementById('boilerClose').value = boiler.close;
+            document.getElementById('boilerRemarks').value = boiler.remarks;
+            calcBoiler();
+          }
+          if (battery.added !== undefined) {
+            document.getElementById('battAdded').value = battery.added;
+            document.getElementById('battPrev').value = battery.prev;
+            document.getElementById('battCurrent').value = battery.current;
+            document.getElementById('battRemarks').value = battery.remarks;
+            calcBattery();
+          }
+
+          recalcTotals();
+          loadPinned();
+          document.getElementById('saveStatus').textContent = 'Imported: ' + file.name;
+        } catch (err) {
+          alert('Import failed: ' + err.message);
+        }
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    // ── PINNED NOTES — carry over across files ──
+    const PINNED_KEY = 'opslog_pinned_notes_v1';
+    const PINNED_CATEGORIES = ['Joints ≥3', 'Maintenance', 'Quality', 'Safety', 'Stock', 'Reminder', 'Other'];
+    let pinnedN = 0;
+
+    function addPinnedRow(d = {}) {
+      pinnedN++;
+      const opts = PINNED_CATEGORIES.map(c =>
+        `<option value="${c}" ${d.cat === c ? 'selected' : ''}>${c}</option>`
+      ).join('');
+      const tbody = document.getElementById('rows-pinned');
+      const tr = document.createElement('tr');
+      tr.className = 'pin-row';
+      tr.innerHTML = `
+    ${ri(pinnedN)}
+    <td colspan="2"><select onchange="savePinned()">${opts}</select></td>
+    <td colspan="7"><textarea rows="1" placeholder="Important note to carry over…" oninput="savePinned()">${d.text || ''}</textarea></td>
+    <td style="width:24px; text-align:center;"><button class="btn-remove" onclick="removePinned(this)">×</button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    function removePinned(btn) { btn.closest('tr').remove(); savePinned(); }
+
+    function collectPinned() {
+      const out = [];
+      document.querySelectorAll('#rows-pinned tr').forEach(tr => {
+        const sel = tr.querySelector('select');
+        const ta = tr.querySelector('textarea');
+        if (sel && ta && (ta.value.trim() || sel.value)) out.push({ cat: sel.value, text: ta.value });
+      });
+      return out;
+    }
+
+    function savePinned() {
+      localStorage.setItem(PINNED_KEY, JSON.stringify(collectPinned()));
+    }
+
+    function loadPinned() {
+      document.getElementById('rows-pinned').innerHTML = '';
+      pinnedN = 0;
+      let arr = [];
+      try { arr = JSON.parse(localStorage.getItem(PINNED_KEY) || '[]'); } catch (e) { }
+      arr.forEach(x => addPinnedRow(x));
+    }
+  </script>
+</body>
+
+</html>
